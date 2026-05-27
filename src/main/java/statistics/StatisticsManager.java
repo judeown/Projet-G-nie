@@ -59,4 +59,43 @@ public class StatisticsManager {
 
         return count;
     }
+        /**
+     * Counts all healthy agents in the grid.
+     *
+     * @param grid the simulation grid
+     * @return the number of healthy agents
+     */
+    public int countHealthy(Grid grid) {
+        return countByState(grid, HealthState.HEALTHY);
+    }
+
+    /**
+     * Counts all infected agents in the grid.
+     *
+     * @param grid the simulation grid
+     * @return the number of infected agents
+     */
+    public int countInfected(Grid grid) {
+        return countByState(grid, HealthState.INFECTED);
+    }
+
+    /**
+     * Counts all recovered agents in the grid.
+     *
+     * @param grid the simulation grid
+     * @return the number of recovered agents
+     */
+    public int countRecovered(Grid grid) {
+        return countByState(grid, HealthState.RECOVERED);
+    }
+
+    /**
+     * Counts all dead agents in the grid.
+     *
+     * @param grid the simulation grid
+     * @return the number of dead agents
+     */
+    public int countDead(Grid grid) {
+        return countByState(grid, HealthState.DEAD);
+    }
 }
