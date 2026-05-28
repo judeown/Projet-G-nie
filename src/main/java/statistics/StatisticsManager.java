@@ -78,7 +78,7 @@ public class StatisticsManager {
     public int countInfected(Grid grid) {
         return countByState(grid, HealthState.INFECTED);
     }
-
+    
     /**
      * Counts all recovered agents in the grid.
      *
@@ -97,5 +97,37 @@ public class StatisticsManager {
      */
     public int countDead(Grid grid) {
         return countByState(grid, HealthState.DEAD);
+    }
+
+        /**
+     * Calculates the percentage of infected agents among all agents.
+     *
+     * @param grid the simulation grid
+     * @return the infection percentage
+     */
+    public double calculateInfectionPercentage(Grid grid) {
+        int totalAgents = countTotalAgents(grid);
+
+        if (totalAgents == 0) {
+            return 0.0;
+        }
+
+        return countInfected(grid) * 100.0 / totalAgents;
+    }
+
+    /**
+     * Calculates the percentage of dead agents among all agents.
+     *
+     * @param grid the simulation grid
+     * @return the death percentage
+     */
+    public double calculateDeathPercentage(Grid grid) {
+        int totalAgents = countTotalAgents(grid);
+
+        if (totalAgents == 0) {
+            return 0.0;
+        }
+
+        return countDead(grid) * 100.0 / totalAgents;
     }
 }
