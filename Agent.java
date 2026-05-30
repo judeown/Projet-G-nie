@@ -1,24 +1,22 @@
 
-enum State {
-    HEALTHY,
-    INFECTED,
-    RECOVERED,
-    DEAD
-}
-
 public class Agent {
     private int positionX;
     private int positionY;
     private int age;
-    private State state = null;
+    private HealthState state;
     public int infectionProbability = 30;
+    private double energy;
+    private double moveProbability = 0.3;
+    private int infectionTime = 0;
+    private double deadProbability = 0.1; // Assuming this should be a double
 
     public Agent(int x, int y, int age) {
         this.positionX = x;
         this.positionY = y;
         this.age = age;
+        this.state = HealthState.HEALTHY;
     }
-    public void setState(State state) {
+    public void setState(HealthState state) {
             this.state = state;
         }
     
@@ -34,20 +32,51 @@ public class Agent {
         }
     }
 
+    public void move(){
+
+    }
+
+    public void infect() {
+        this.state = HealthState.INFECTED;
+    }
+
+    public void recover() {
+        this.state = HealthState.RECOVERED;
+    }
+
+    public void die() {
+        this.state = HealthState.DEAD;
+    }
+
+    public boolean isAlive() {
+        return this.state != HealthState.DEAD;
+    }
+
+    public void setPositionX(int x) {
+        this.positionX = x;
+    }
+
+    public void setPositionY(int y) {
+        this.positionY = y;
+    }
+
+    public void incrementInfectionTime() {
+        this.infectionTime++;
+    }
 
 
 
 
 
-
-
-
+    public double getEnergy() {
+        return energy;
+    }
 
     public int getAge() {
         return age;
     }
 
-    public State getState() {
+    public HealthState getState() {
         return state;
     }
    
@@ -57,6 +86,19 @@ public class Agent {
     public int getPositionY() {
         return positionY;
     }
+
+    public int getInfectionTime() {
+        return infectionTime;
+    }
+
+    public double getMoveProbability() {
+        return moveProbability;
+    }
+
+    public double getDeadProbability() {
+        return deadProbability;
+    }
+
 
 
 }
