@@ -130,4 +130,36 @@ public class StatisticsManager {
 
         return countDead(grid) * 100.0 / totalAgents;
     }
+
+        /**
+     * Calculates the average age of all agents in the grid.
+     *
+     * @param grid the simulation grid
+     * @return the average age, or 0.0 if the grid is empty
+     */
+    public double calculateAverageAge(Grid grid) {
+        if (grid == null) {
+            return 0.0;
+        }
+
+        int totalAge = 0;
+        int count = 0;
+
+        for (int row = 0; row < grid.getRows(); row++) {
+            for (int column = 0; column < grid.getColumns(); column++) {
+                Agent agent = grid.getAgent(row, column);
+
+                if (agent != null) {
+                    totalAge += agent.getAge();
+                    count++;
+                }
+            }
+        }
+
+        if (count == 0) {
+            return 0.0;
+        }
+
+        return (double) totalAge / count;
+    }
 }
