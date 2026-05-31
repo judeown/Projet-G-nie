@@ -13,14 +13,6 @@ public class Grid {
         this.cells = new Agent[width][height];
     }
 
-    public int getWidth() {
-        return width;
-    }
-
-    public int getHeight() {
-        return height;
-    }
-
     public int getRows() {
         return width;
     }
