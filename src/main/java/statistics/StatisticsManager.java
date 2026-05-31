@@ -162,4 +162,88 @@ public class StatisticsManager {
 
         return (double) totalAge / count;
     }
+
+        /**
+     * Calculates the average energy of all agents in the grid.
+     *
+     * @param grid the simulation grid
+     * @return the average energy, or 0.0 if the grid is empty
+     */
+    public double calculateAverageEnergy(Grid grid) {
+        if (grid == null) {
+            return 0.0;
+        }
+
+        double totalEnergy = 0.0;
+        int count = 0;
+
+        for (int row = 0; row < grid.getRows(); row++) {
+            for (int column = 0; column < grid.getColumns(); column++) {
+                Agent agent = grid.getAgent(row, column);
+
+                if (agent != null) {
+                    totalEnergy += agent.getEnergy();
+                    count++;
+                }
+            }
+        }
+
+        if (count == 0) {
+            return 0.0;
+        }
+
+        return totalEnergy / count;
+    }
+
+    /**
+     * Finds the minimum energy value among all agents in the grid.
+     *
+     * @param grid the simulation grid
+     * @return the minimum energy, or 0.0 if the grid is empty
+     */
+    public double getMinimumEnergy(Grid grid) {
+        if (grid == null || countTotalAgents(grid) == 0) {
+            return 0.0;
+        }
+
+        double minimumEnergy = Double.MAX_VALUE;
+
+        for (int row = 0; row < grid.getRows(); row++) {
+            for (int column = 0; column < grid.getColumns(); column++) {
+                Agent agent = grid.getAgent(row, column);
+
+                if (agent != null && agent.getEnergy() < minimumEnergy) {
+                    minimumEnergy = agent.getEnergy();
+                }
+            }
+        }
+
+        return minimumEnergy;
+    }
+
+    /**
+     * Finds the maximum energy value among all agents in the grid.
+     *
+     * @param grid the simulation grid
+     * @return the maximum energy, or 0.0 if the grid is empty
+     */
+    public double getMaximumEnergy(Grid grid) {
+        if (grid == null || countTotalAgents(grid) == 0) {
+            return 0.0;
+        }
+
+        double maximumEnergy = Double.MIN_VALUE;
+
+        for (int row = 0; row < grid.getRows(); row++) {
+            for (int column = 0; column < grid.getColumns(); column++) {
+                Agent agent = grid.getAgent(row, column);
+
+                if (agent != null && agent.getEnergy() > maximumEnergy) {
+                    maximumEnergy = agent.getEnergy();
+                }
+            }
+        }
+
+        return maximumEnergy;
+    }
 }
