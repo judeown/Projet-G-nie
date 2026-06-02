@@ -54,8 +54,20 @@ public class Agent {
         }
     }
 
-    public void canMove(){
-        
+    
+    public boolean canMove() {
+
+        if (!isAlive()) {
+            return false;
+        }
+
+        if (energy < 10) {
+            moveProbability = 0.1;
+        } else {
+            moveProbability = 0.3;
+        }
+
+        return Math.random() < moveProbability;
     }
 
     
