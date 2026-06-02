@@ -1,10 +1,3 @@
-public class AgentException extends RuntimeException {
-    public AgentException(String message) {
-        super(message);
-    }
-}
-
-
 public class Agent {
     private int positionX;
     private int positionY;
@@ -37,6 +30,7 @@ public class Agent {
             this.energy = 50.0; // Initial energy level 
         }
     }
+
     public void setState(HealthState state) {
             this.state = state;
         }
@@ -52,7 +46,6 @@ public class Agent {
             infectionProbability = 40;
         }
     }
-
 
     public boolean canMove() {
 
