@@ -1,4 +1,4 @@
-public AgentException{
+public class AgentException extends RuntimeException {
     public AgentException(String message) {
         super(message);
     }
@@ -16,7 +16,7 @@ public class Agent {
     private int infectionTime = 0;
     private double deadProbability = 0.1; // Assuming this should be a double
 
-    public Agent(int x, int y, int age) {
+    public Agent(int x, int y, int age) throws AgentException {
         if(age < 0 || age > 110) {
             throw new AgentException("Age must be between 0 and 100.");
         }
@@ -36,7 +36,6 @@ public class Agent {
         } else {
             this.energy = 50.0; // Initial energy level 
         }
-        this.energy = 100.0; // Initial energy level   
     }
     public void setState(HealthState state) {
             this.state = state;
@@ -54,7 +53,7 @@ public class Agent {
         }
     }
 
-    
+
     public boolean canMove() {
 
         if (!isAlive()) {
