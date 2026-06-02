@@ -1,14 +1,12 @@
-package controller;
 import java.awt.event.MouseEvent;
-
-enum Tool {
-    ADD,
-    REMOVE
-}
 
 public class InteractionController {
 
-    private Tool currentTool;   
+    private Tool currentTool;
+
+    public InteractionController() {
+        this.currentTool = Tool.SELECT; // Default tool
+    }
 
     public Tool getTool() {
         return this.currentTool;
@@ -19,7 +17,7 @@ public class InteractionController {
     }
 
     public void addAgentOnClick(MouseEvent event) {
-        if (currentTool == Tool.ADD) {
+        if (this.currentTool == Tool.ADD) {
             // grid.addAgent((int) event.getX(), (int) event.getY());
         }
     }
