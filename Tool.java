@@ -1,4 +1,5 @@
 
+
 public enum Tool {
-    ADD, REMOVE, BRUSH;
+    ADD, REMOVE, BRUSH, ERASER, SELECT;
 }

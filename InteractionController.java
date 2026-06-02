@@ -28,5 +28,22 @@ public class InteractionController {
             int y = (int) event.getY();
             // grid.removeAgent(x, y);
         }
+        
     }
+    public void brushOnDrag(MouseEvent event) {
+        if (currentTool == Tool.BRUSH) {
+            int x = (int) event.getX();
+            int y = (int) event.getY();
+            // grid.addAgent(x, y);  // pinceau : ajoute en continu pendant le drag
+        }
+    }
+
+    public void eraseOnDrag(MouseEvent event) {
+        if (currentTool == Tool.ERASER) {
+            int x = (int) event.getX();
+            int y = (int) event.getY();
+            // grid.removeAgent(x, y);  // gomme : supprime en continu pendant le drag
+        }
+    }
+
 }
