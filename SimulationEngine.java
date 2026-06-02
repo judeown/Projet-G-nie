@@ -42,7 +42,7 @@ public class SimulationEngine {
         if (Math.random() < a.getMoveProbability()) {
             List<Position> positions = Position.getNeighbors(
                 new Position(a.getPositionX(), a.getPositionY()),
-                grid.getWidth(), grid.getHeight()
+                grid.getRows(), grid.getColumns()
             );
             List<Position> freePositions = new ArrayList<>();
             for (Position p : positions) {
@@ -62,10 +62,10 @@ public class SimulationEngine {
     }
 
     private void updateAgent(Agent a) {
-        if (a.getState() == State.DEAD) {
+        if (a.getState() == HealthState.DEAD) {
             return;
         }
-        if (a.getState() == State.INFECTED) {
+        if (a.getState() == HealthState.INFECTED) {
             a.incrementInfectionTime();
             double random = Math.random();
             if (random < mortalityRate) {
@@ -74,17 +74,26 @@ public class SimulationEngine {
             } else if (random < recoveryRate) {
                 a.recover();
             }
-        } else if (a.getState() == State.HEALTHY) {
+        } else if (a.getState() == HealthState.HEALTHY) {
             List<Agent> infectedNeighbors = grid.getNeighborAgents(
                 a.getPositionX(), a.getPositionY()
             );
-            if (infectedNeighbors.size() > 0) {
+            boolean hasInfectedNeighbor = false;
+            for (Agent neighbor : infectedNeighbors) {
+                if (neighbor.getState() == HealthState.INFECTED) {
+                    hasInfectedNeighbor = true;
+                    break;
+                }
+            }
+            if (hasInfectedNeighbor) {
                 if (Math.random() < contagionRate) {
                     a.infect();
                 }
             }
         }
-        moveAgent(a);
+        if (a.getState() != HealthState.DEAD) {
+            moveAgent(a);
+        }
     }
 
     public void step() {
