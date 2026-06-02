@@ -1,9 +1,14 @@
 package controller;
 import java.awt.event.MouseEvent;
 
+enum Tool {
+    ADD,
+    REMOVE
+}
+
 public class InteractionController {
 
-    private Tool currentTool;   // même package → pas d'import pour Tool
+    private Tool currentTool;   
 
     public Tool getTool() {
         return this.currentTool;
