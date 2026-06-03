@@ -39,14 +39,19 @@ public class Position {
         return "(" + getX() + ", " + getY() + ")";
     }
 
-    public static List<Position> getNeighbors(Position p, int width, int height) {
+    /**
+     * CORRECTION : les paramètres s'appellent désormais "rows" et "columns"
+     * pour correspondre exactement à ce que Grid.getRows() et Grid.getColumns() renvoient.
+     * La logique reste identique : x est borné par rows, y est borné par columns.
+     */
+    public static List<Position> getNeighbors(Position p, int rows, int columns) {
         List<Position> neighbors = new ArrayList<>();
         int x = p.getX();
         int y = p.getY();
-        if (x > 0)          { neighbors.add(new Position(x - 1, y)); }
-        if (y > 0)          { neighbors.add(new Position(x, y - 1)); }
-        if (x < width - 1)  { neighbors.add(new Position(x + 1, y)); }
-        if (y < height - 1) { neighbors.add(new Position(x, y + 1)); }
+        if (x > 0)           { neighbors.add(new Position(x - 1, y)); }
+        if (y > 0)           { neighbors.add(new Position(x, y - 1)); }
+        if (x < rows - 1)    { neighbors.add(new Position(x + 1, y)); }
+        if (y < columns - 1) { neighbors.add(new Position(x, y + 1)); }
         return neighbors;
     }
 
