@@ -1,0 +1,6 @@
+{
+  "java.project.sourcePaths": ["src"],
+  "java.project.referencedLibraries": [
+    "//Users/judeowona/Downloads/javafx-sdk-25.0.3/lib//*.jar"
+  ]
+}
