@@ -9,54 +9,40 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
-/**
- * Left side panel with simulation controls.
- *
- * <p>Exposes buttons and sliders. The actual wiring to
- * {@code SimulationEngine.start()}, {@code pause()}, {@code step()} is done
- * in {@link MainView} to keep this class purely visual.
- */
+
 public class ControlPanel extends VBox {
 
-    // ── Simulation control buttons ────────────────────────────────────────────
     private final Button playButton;
     private final Button pauseButton;
     private final Button stepButton;
     private final Button resetButton;
     private final Button clearButton;
 
-    // ── Speed slider (steps per second) ──────────────────────────────────────
     private final Slider speedSlider;
     private final Label  speedValueLabel;
 
-    // ── Parameter sliders (fed into SimulationEngine setters) ─────────────────
     private final Slider contagionSlider;
     private final Slider recoverySlider;
     private final Slider mortalitySlider;
 
-    // ── Tool selector (ADD / REMOVE / BRUSH) ──────────────────────────────────
     private final ComboBox<String> toolSelector;
 
-    // ── Step counter label ────────────────────────────────────────────────────
     private final Label stepLabel;
 
-    /**
-     * Builds the control panel UI.
-     */
+   
     public ControlPanel() {
         super(12);
         setPadding(new Insets(16));
         setPrefWidth(220);
         setStyle("-fx-background-color: #16213e; -fx-border-color: #2d2d4e; -fx-border-width: 0 1 0 0;");
 
-        // ── Initialise fields ─────────────────────────────────────────────────
         playButton   = styledButton("▶  Play",   "#4ade80", "#166534");
         pauseButton  = styledButton("⏸  Pause",  "#facc15", "#713f12");
         stepButton   = styledButton("⏭  Step",   "#60a5fa", "#1e3a5f");
         resetButton  = styledButton("↺  Reset",  "#f87171", "#7f1d1d");
         clearButton  = styledButton("🗑  Clear",  "#a78bfa", "#3b0764");
 
-        pauseButton.setDisable(true); // disabled until simulation starts
+        pauseButton.setDisable(true); 
 
         speedSlider      = buildSlider(1, 30, 5);
         speedValueLabel  = new Label("5");
@@ -83,7 +69,6 @@ public class ControlPanel extends VBox {
         stepLabel.setTextFill(Color.web("#94a3b8"));
         stepLabel.setFont(Font.font("Monospace", 11));
 
-        // ── Layout ────────────────────────────────────────────────────────────
         Label title = new Label("CELL SIMULATION");
         title.setFont(Font.font("Monospace", FontWeight.BOLD, 13));
         title.setTextFill(Color.web("#60a5fa"));
@@ -115,7 +100,6 @@ public class ControlPanel extends VBox {
         );
     }
 
-    // ── Public API ────────────────────────────────────────────────────────────
 
     /**
      * Updates the step counter display.
@@ -126,21 +110,18 @@ public class ControlPanel extends VBox {
         stepLabel.setText("Step: " + step);
     }
 
-    /** Switches buttons to running state (play disabled, pause enabled). */
     public void setRunningState() {
         playButton.setDisable(true);
         pauseButton.setDisable(false);
         stepButton.setDisable(true);
     }
 
-    /** Switches buttons to paused state (play enabled, pause disabled). */
     public void setPausedState() {
         playButton.setDisable(false);
         pauseButton.setDisable(true);
         stepButton.setDisable(false);
     }
 
-    // ── Getters (for MainView to attach listeners) ────────────────────────────
 
     /** @return the Play button */
     public Button getPlayButton()  { return playButton; }
@@ -172,7 +153,6 @@ public class ControlPanel extends VBox {
     /** @return the currently selected tool name: "ADD", "REMOVE", or "BRUSH" */
     public String getSelectedTool() { return toolSelector.getValue(); }
 
-    // ── Helpers ───────────────────────────────────────────────────────────────
 
     private Button styledButton(String text, String fg, String bg) {
         Button b = new Button(text);

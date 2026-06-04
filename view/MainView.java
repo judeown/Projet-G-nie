@@ -9,25 +9,9 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-/**
- * Main application window.
- *
- * <p>Assembles {@link GridView}, {@link ControlPanel}, and {@link StatsPanel}.
- * Wires every button and slider to the team's existing classes:
- * <ul>
- *   <li>{@code SimulationEngine.start()} → Play button</li>
- *   <li>{@code SimulationEngine.pause()} → Pause button</li>
- *   <li>{@code SimulationEngine.step()}  → Step button (one step at a time)</li>
- *   <li>{@code SimulationEngine.getCurrentStep()} → step counter label</li>
- *   <li>{@code Grid.clear()} → Clear button  (TODO: add clear() to Grid if not present)</li>
- *   <li>{@code StatisticsManager} methods → StatsPanel (via StatsPanel.update)</li>
- * </ul>
- *
- * <p>No simulation logic lives here — this class only orchestrates the UI.
- */
+
 public class MainView {
 
-    /** Pixel size of one grid cell — must match GridView.CELL_SIZE. */
     private static final int CELL_SIZE = 16;
 
     private final Stage               stage;
@@ -38,10 +22,8 @@ public class MainView {
     private final StatsPanel          statsPanel;
     private final InteractionController interactionController;
 
-    /** JavaFX animation timer driving the simulation loop. */
     private AnimationTimer timer;
 
-    /** Timestamp of the last executed simulation step (nanoseconds). */
     private long lastStepTime = 0;
 
     /**
@@ -66,9 +48,7 @@ public class MainView {
         wireMouse();
     }
 
-    /**
-     * Builds and displays the scene.
-     */
+    
     public void show() {
         BorderPane root = new BorderPane();
         root.setStyle("-fx-background-color: #1a1a2e;");
@@ -89,35 +69,27 @@ public class MainView {
         stage.setOnCloseRequest(e -> { if (timer != null) timer.stop(); });
         stage.show();
 
-        // Initial render with empty grid
         gridView.render();
         statsPanel.update(grid);
     }
 
-    // ── Control wiring ────────────────────────────────────────────────────────
 
-    /**
-     * Wires all ControlPanel buttons and sliders to the SimulationEngine.
-     */
+    
     private void wireControls() {
 
-        // ── Play → SimulationEngine.start() ──────────────────────────────────
         controlPanel.getPlayButton().setOnAction(e -> {
             engine.start();
             controlPanel.setRunningState();
             timer.start();
         });
 
-        // ── Pause → SimulationEngine.pause() ─────────────────────────────────
         controlPanel.getPauseButton().setOnAction(e -> {
             engine.pause();
             controlPanel.setPausedState();
             timer.stop();
         });
 
-        // ── Step → one manual step ────────────────────────────────────────────
-        // SimulationEngine.step() only runs if isRunning() == true,
-        // so we temporarily start, step once, then pause again.
+        
         controlPanel.getStepButton().setOnAction(e -> {
             engine.start();
             engine.step();
@@ -125,46 +97,33 @@ public class MainView {
             refreshDisplay();
         });
 
-        // ── Reset ─────────────────────────────────────────────────────────────
-        // TODO: add reset() / clear() to SimulationEngine and Grid once merged.
-        // For now we pause and clear the display.
+        
         controlPanel.getResetButton().setOnAction(e -> {
             timer.stop();
             engine.pause();
-            // grid.clear(); // ← uncomment once Grid.clear() is available
             controlPanel.setPausedState();
             controlPanel.updateStep(0);
             statsPanel.reset();
             gridView.render();
         });
 
-        // ── Clear grid ────────────────────────────────────────────────────────
         controlPanel.getClearButton().setOnAction(e -> {
-            // grid.clear(); // ← uncomment once Grid.clear() is available
             gridView.render();
             statsPanel.update(grid);
         });
 
-        // ── Parameter sliders → SimulationEngine setters ─────────────────────
-        // TODO: expose setContagionRate / setRecoveryRate / setMortalityRate
-        // in SimulationEngine once merged. For now these are wired but no-op.
+        
         controlPanel.getContagionSlider().valueProperty().addListener((obs, o, n) -> {
-            // engine.setContagionRate(n.doubleValue()); // uncomment when available
         });
         controlPanel.getRecoverySlider().valueProperty().addListener((obs, o, n) -> {
-            // engine.setRecoveryRate(n.doubleValue());
         });
         controlPanel.getMortalitySlider().valueProperty().addListener((obs, o, n) -> {
-            // engine.setMortalityRate(n.doubleValue());
         });
 
-        // ── Tool selector → InteractionController ────────────────────────────
-        // Kept in sync via getSelectedTool() at click time (see wireMouse)
+       
     }
 
-    /**
-     * Attaches mouse click and drag handlers to the GridView canvas.
-     */
+   
     private void wireMouse() {
         gridView.setOnMouseClicked(this::handleMouse);
         gridView.setOnMouseDragged(this::handleMouse);
@@ -178,7 +137,6 @@ public class MainView {
      * @param event the JavaFX mouse event
      */
     private void handleMouse(MouseEvent event) {
-        // Sync the tool from the UI selector
         String toolName = controlPanel.getSelectedTool();
         switch (toolName) {
             case "ADD":    interactionController.setTool(InteractionController.Tool.ADD);    break;
@@ -192,12 +150,7 @@ public class MainView {
         statsPanel.update(grid);
     }
 
-    // ── Animation timer ───────────────────────────────────────────────────────
-
-    /**
-     * Builds the animation timer that calls {@code SimulationEngine.step()}
-     * at the rate chosen by the speed slider.
-     */
+   
     private void buildTimer() {
         timer = new AnimationTimer() {
             @Override
@@ -213,10 +166,7 @@ public class MainView {
         };
     }
 
-    /**
-     * Refreshes the GridView and StatsPanel after a simulation step.
-     * Also updates the step counter using {@code SimulationEngine.getCurrentStep()}.
-     */
+    
     private void refreshDisplay() {
         gridView.render();
         statsPanel.update(grid);

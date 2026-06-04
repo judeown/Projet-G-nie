@@ -4,22 +4,11 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
-/**
- * JavaFX Canvas that renders the simulation grid.
- *
- * <p>Uses only the team's existing API:
- * <ul>
- *   <li>{@code Grid.getRows()} / {@code Grid.getColumns()} for dimensions</li>
- *   <li>{@code Grid.getAgent(x, y)} to read each cell</li>
- *   <li>{@code Agent.getState()} to pick the display color</li>
- * </ul>
- */
+
 public class GridView extends Canvas {
 
-    /** Pixel size of each grid cell. */
     private static final int CELL_SIZE = 16;
 
-    // ── Colors mapped to HealthState values ──────────────────────────────────
     private static final Color COLOR_EMPTY     = Color.web("#1a1a2e");
     private static final Color COLOR_HEALTHY   = Color.web("#4ade80");
     private static final Color COLOR_INFECTED  = Color.web("#f87171");
@@ -27,10 +16,7 @@ public class GridView extends Canvas {
     private static final Color COLOR_DEAD      = Color.web("#6b7280");
     private static final Color COLOR_GRID_LINE = Color.web("#2d2d4e");
 
-    /**
-     * Reference to the team's Grid object.
-     * GridView never modifies it — read-only access.
-     */
+    
     private Grid grid;
 
     /**
@@ -44,24 +30,19 @@ public class GridView extends Canvas {
         this.grid = grid;
     }
 
-    /**
-     * Redraws every cell on the canvas.
-     * Should be called after each simulation step or user interaction.
-     */
+    
     public void render() {
         GraphicsContext gc = getGraphicsContext2D();
-        int cols = grid.getRows();    // team naming: getRows() = nb of columns
-        int rows = grid.getColumns(); // team naming: getColumns() = nb of rows
+        int cols = grid.getRows();    
+        int rows = grid.getColumns(); 
 
-        // Background
         gc.setFill(COLOR_EMPTY);
         gc.fillRect(0, 0, getWidth(), getHeight());
 
         for (int x = 0; x < cols; x++) {
             for (int y = 0; y < rows; y++) {
-                Agent agent = grid.getAgent(x, y); // null if empty
+                Agent agent = grid.getAgent(x, y); 
 
-                // Choose color based on Agent.getState()
                 Color color = resolveColor(agent);
 
                 gc.setFill(color);
@@ -72,7 +53,6 @@ public class GridView extends Canvas {
                     CELL_SIZE - 2
                 );
 
-                // Grid lines
                 gc.setStroke(COLOR_GRID_LINE);
                 gc.setLineWidth(0.5);
                 gc.strokeRect(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);

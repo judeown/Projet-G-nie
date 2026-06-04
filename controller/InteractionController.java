@@ -2,41 +2,24 @@
 
 import javafx.scene.input.MouseEvent;
 
-/**
- * Handles mouse interactions with the simulation grid.
- *
- * <p>This class extends the work started in {@code partie4/InteractionController}.
- * The tool enum and setters are kept identical. The actual grid operations
- * ({@code grid.addAgent}, {@code grid.removeAgent}) are now fully implemented
- * using the team's {@code Grid} and {@code Agent} APIs.
+
  */
 public class InteractionController {
 
-    /**
-     * The available interaction tools, as defined in partie4.
-     */
+    
     public enum Tool {
-        /** Adds a single agent on click. */
         ADD,
-        /** Removes the agent at the clicked cell. */
         REMOVE,
-        /** Fills a 3×3 brush area around the click. */
         BRUSH
     }
 
-    /** Currently active tool. */
     private Tool currentTool;
 
-    /**
-     * The simulation grid — injected so the controller can add/remove agents.
-     * Never null after construction.
-     */
+
     private final Grid grid;
 
-    /** Default age for newly created agents. */
     private static final int    DEFAULT_AGE    = 25;
 
-    /** Default energy for newly created agents. */
     private static final double DEFAULT_ENERGY = 80.0;
 
     /**

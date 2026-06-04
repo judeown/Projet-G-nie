@@ -13,25 +13,13 @@ import javafx.scene.text.FontWeight;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Right side panel showing live simulation statistics.
- *
- * <p>Uses {@link StatisticsManager} exclusively for all numbers.
- * The {@code StatisticsManager} currently works with {@code mock.Grid} /
- * {@code mock.Agent}. Once the team merges and updates its imports to
- * use the real {@code Grid} / {@code Agent}, this panel will work without
- * any changes — the method signatures are identical.
- *
- * <p>Until then, a {@code TODO} comment marks the temporary workaround.
- */
+
 public class StatsPanel extends VBox {
 
-    /** Number of historical data points shown in the chart. */
     private static final int HISTORY_SIZE = 80;
     private static final int CHART_W      = 190;
     private static final int CHART_H      = 90;
 
-    // ── Stat labels ───────────────────────────────────────────────────────────
     private final Label totalLabel;
     private final Label healthyLabel;
     private final Label infectedLabel;
@@ -42,27 +30,21 @@ public class StatsPanel extends VBox {
     private final Label minEnergyLabel;
     private final Label maxEnergyLabel;
 
-    /** Canvas for drawing the history chart. */
     private final Canvas chartCanvas;
 
-    /** StatisticsManager from the team's feature/statistics-cli branch. */
     private final StatisticsManager statsManager;
 
-    // ── History lists for the chart ───────────────────────────────────────────
     private final List<Integer> healthyHistory   = new ArrayList<>();
     private final List<Integer> infectedHistory  = new ArrayList<>();
     private final List<Integer> recoveredHistory = new ArrayList<>();
 
-    /**
-     * Creates the statistics panel.
-     */
+   
     public StatsPanel() {
         super(8);
         setPadding(new Insets(16));
         setPrefWidth(230);
         setStyle("-fx-background-color: #0f3460; -fx-border-color: #2d2d4e; -fx-border-width: 0 0 0 1;");
 
-        // Instantiate the team's StatisticsManager — no modification needed
         statsManager = new StatisticsManager();
 
         totalLabel     = statLabel("Total:      0");
@@ -117,7 +99,6 @@ public class StatsPanel extends VBox {
     public void update(Grid grid) {
         if (grid == null) return;
 
-        // All numbers come exclusively from StatisticsManager
         int total     = statsManager.countTotalAgents(grid);
         int healthy   = statsManager.countHealthy(grid);
         int infected  = statsManager.countInfected(grid);
@@ -143,7 +124,6 @@ public class StatsPanel extends VBox {
         minEnergyLabel.setText(String.format("Min energy: %.1f", minEnergy));
         maxEnergyLabel.setText(String.format("Max energy: %.1f", maxEnergy));
 
-        // Update chart history
         healthyHistory.add(healthy);
         infectedHistory.add(infected);
         recoveredHistory.add(recovered);
@@ -154,9 +134,7 @@ public class StatsPanel extends VBox {
         drawChart(total);
     }
 
-    /**
-     * Resets all labels and clears chart history.
-     */
+   
     public void reset() {
         healthyHistory.clear();
         infectedHistory.clear();
@@ -173,7 +151,6 @@ public class StatsPanel extends VBox {
         maxEnergyLabel.setText("Max energy: 0.0");
     }
 
-    // ── Chart drawing ─────────────────────────────────────────────────────────
 
     private void drawChart(int maxTotal) {
         GraphicsContext gc = chartCanvas.getGraphicsContext2D();
@@ -210,7 +187,6 @@ public class StatsPanel extends VBox {
         gc.fillRect(0, 0, CHART_W, CHART_H);
     }
 
-    // ── Label helpers ─────────────────────────────────────────────────────────
 
     private Label statLabel(String text) {
         Label l = new Label(text);

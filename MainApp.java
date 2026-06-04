@@ -1,15 +1,11 @@
 import javafx.application.Application;
 import javafx.stage.Stage;
 
-/**
- * Entry point of the 2D Cell Simulation JavaFX application.
- */
+
 public class MainApp extends Application {
 
-    /** Default grid width (columns). */
     private static final int GRID_WIDTH  = 40;
 
-    /** Default grid height (rows). */
     private static final int GRID_HEIGHT = 30;
 
     /**
@@ -20,7 +16,6 @@ public class MainApp extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            // Create the model objects from the team's existing classes
             Grid              grid   = new Grid(GRID_WIDTH, GRID_HEIGHT);
             SimulationEngine  engine = new SimulationEngine(grid, 0.3, 0.1, 0.05, 0.3);
 

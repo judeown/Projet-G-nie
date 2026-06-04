@@ -1,9 +1,6 @@
 package mock;
 
-/**
- * Temporary mock grid used only for testing the statistics module.
- * This class must be replaced by the official project grid implementation.
- */
+
 public class Grid {
 
     private Agent[][] agents;
