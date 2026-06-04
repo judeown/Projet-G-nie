@@ -1,4 +1,4 @@
-package view;
+
 
 import javafx.geometry.Insets;
 import javafx.scene.canvas.Canvas;
@@ -8,7 +8,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import statistics.StatisticsManager;
+
 
 import java.util.ArrayList;
 import java.util.List;

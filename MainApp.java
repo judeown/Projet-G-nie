@@ -1,6 +1,5 @@
 import javafx.application.Application;
 import javafx.stage.Stage;
-import view.MainView;
 
 /**
  * Entry point of the 2D Cell Simulation JavaFX application.

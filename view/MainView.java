@@ -1,6 +1,5 @@
-package view;
 
-import controller.InteractionController;
+
 import javafx.animation.AnimationTimer;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;

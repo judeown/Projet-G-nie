@@ -13,51 +13,44 @@ public class Grid {
         this.cells = new Agent[width][height];
     }
 
-    public int getRows() {
-        return width;
-    }
-
-    public int getColumns() {
-        return height;
-    }
+    public int getRows() { return width; }
+    public int getColumns() { return height; }
+    public int getWidth() { return width; }
+    public int getHeight() { return height; }
 
     public Agent getAgent(int x, int y) {
-        if (x >= 0 && x < width && y >= 0 && y < height) {
-            return cells[x][y];
-        }
+        if (x >= 0 && x < width && y >= 0 && y < height) return cells[x][y];
         return null;
     }
 
     public void addAgent(Agent a) {
         int x = a.getPositionX();
         int y = a.getPositionY();
-        if (x >= 0 && x < width && y >= 0 && y < height && cells[x][y] == null) {
+        if (x >= 0 && x < width && y >= 0 && y < height && cells[x][y] == null)
             cells[x][y] = a;
-        }
     }
 
     public void removeAgent(int x, int y) {
-        if (x >= 0 && x < width && y >= 0 && y < height) {
-            cells[x][y] = null;
-        }
+        if (x >= 0 && x < width && y >= 0 && y < height) cells[x][y] = null;
     }
 
     public boolean isEmpty(int x, int y) {
-        if (x >= 0 && x < width && y >= 0 && y < height) {
-            return cells[x][y] == null;
-        }
+        if (x >= 0 && x < width && y >= 0 && y < height) return cells[x][y] == null;
         return false;
+    }
+
+    public void clear() {
+        for (int x = 0; x < width; x++)
+            for (int y = 0; y < height; y++)
+                cells[x][y] = null;
     }
 
     public List<Agent> getAllAgents() {
         List<Agent> all = new ArrayList<>();
-        for (Agent[] row : cells) {
-            for (Agent agent : row) {
-                if (agent != null && agent.getState() != State.DEAD) {
+        for (Agent[] row : cells)
+            for (Agent agent : row)
+                if (agent != null && agent.getState() != HealthState.DEAD)
                     all.add(agent);
-                }
-            }
-        }
         return all;
     }
 
@@ -66,11 +59,8 @@ public class Grid {
         List<Position> positions = Position.getNeighbors(new Position(x, y), width, height);
         for (Position p : positions) {
             Agent a = cells[p.getX()][p.getY()];
-            if (a != null && a.getState() != State.DEAD) {
-                neighbors.add(a);
-            }
+            if (a != null && a.getState() != HealthState.DEAD) neighbors.add(a);
         }
         return neighbors;
     }
-
 }
