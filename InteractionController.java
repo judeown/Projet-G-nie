@@ -3,9 +3,15 @@ import java.awt.event.MouseEvent;
 public class InteractionController {
 
     private Tool currentTool;
+    private Grid grid;
 
-    public InteractionController() {
-        this.currentTool = Tool.SELECT; // Default tool
+    
+    private int newAgentAge = 30;
+    private HealthState newAgentType = HealthState.HEALTHY;
+
+    public InteractionController(Grid grid) {
+        this.currentTool = Tool.SELECT;
+        this.grid = grid;
     }
 
     public Tool getTool() {
@@ -16,34 +22,44 @@ public class InteractionController {
         this.currentTool = tool;
     }
 
+   
+    public void setNewAgentAge(int age) {
+        this.newAgentAge = age;
+    }
+
+    
+    public void setNewAgentType(HealthState type) {
+        this.newAgentType = type;
+    }
+
     public void addAgentOnClick(MouseEvent event) {
-        if (this.currentTool == Tool.ADD) {
-            // grid.addAgent((int) event.getX(), (int) event.getY());
+        if (currentTool == Tool.ADD) {
+            placeAgent(event.getX(), event.getY());
         }
     }
 
     public void removeOnLeftClick(MouseEvent event) {
         if (currentTool == Tool.REMOVE) {
-            int x = (int) event.getX();
-            int y = (int) event.getY();
-            // grid.removeAgent(x, y);
+            grid.removeAgent(event.getX(), event.getY());
         }
-        
     }
+
     public void brushOnDrag(MouseEvent event) {
         if (currentTool == Tool.BRUSH) {
-            int x = (int) event.getX();
-            int y = (int) event.getY();
-            // grid.addAgent(x, y);  // pinceau : ajoute en continu pendant le drag
+            placeAgent(event.getX(), event.getY());
         }
     }
 
     public void eraseOnDrag(MouseEvent event) {
         if (currentTool == Tool.ERASER) {
-            int x = (int) event.getX();
-            int y = (int) event.getY();
-            // grid.removeAgent(x, y);  // gomme : supprime en continu pendant le drag
+            grid.removeAgent(event.getX(), event.getY());
         }
     }
 
+
+    private void placeAgent(int x, int y) {
+        Agent a = new Agent(x, y, newAgentAge);
+        a.setState(newAgentType);
+        grid.addAgent(a);
+    }
 }
