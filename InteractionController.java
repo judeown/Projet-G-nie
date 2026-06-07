@@ -6,17 +6,18 @@ import javafx.scene.input.MouseEvent;
  * Supports four tools: ADD (single cell), REMOVE, BRUSH (3×3 area), and ZONE (rectangle).
  */
 public class InteractionController {
-    public enum Tool {
-   
-    ADD,
-  
-    REMOVE,
-   
-    BRUSH,
-   
-    ZONE
-}
 
+    /** Available interaction tools. */
+    public enum Tool {
+        /** Adds a single healthy agent on click. */
+        ADD,
+        /** Removes the agent at the clicked cell. */
+        REMOVE,
+        /** Fills a 3×3 area centred on the clicked cell with healthy agents. */
+        BRUSH,
+        /** Fills a rectangular area from mouse-pressed to mouse-released. */
+        ZONE
+    }
 
     private Tool        currentTool;
     private HealthState placeState;
