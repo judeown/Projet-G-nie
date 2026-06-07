@@ -1,0 +1,10 @@
+{
+  "version": "0.2.0",
+  "configurations": [{
+    "type": "java",
+    "name": "Launch App",
+    "request": "launch",
+    "mainClass": "MainApp",
+    "vmArgs": "--module-path /Users/judeowona/Downloads/javafx-sdk-21.0.11/lib --add-modules javafx.controls,javafx.fxml -Djavafx.verbose=false"
+  }]
+}
