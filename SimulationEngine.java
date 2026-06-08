@@ -39,7 +39,7 @@ public class SimulationEngine {
     }
 
     private void moveAgent(Agent a) {
-        if (Math.random() < a.getMoveProbability()) {
+        if (a.canMove()) {
             List<Position> positions = Position.getNeighbors(
                 new Position(a.getPositionX(), a.getPositionY()),
                 grid.getRows(), grid.getColumns()

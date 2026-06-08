@@ -39,7 +39,6 @@ public class Position {
         return "(" + getX() + ", " + getY() + ")";
     }
 
-    
     public static List<Position> getNeighbors(Position p, int rows, int columns) {
         List<Position> neighbors = new ArrayList<>();
         int x = p.getX();
