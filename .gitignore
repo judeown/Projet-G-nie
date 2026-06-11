@@ -1,0 +1,10 @@
+
+out/
+*.class
+
+
+.vscode/
+
+
+.DS_Store
+Thumbs.db
