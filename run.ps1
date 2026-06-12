@@ -1,0 +1,1 @@
+java --module-path "javafx-sdk-21.0.11\lib" --add-modules javafx.controls -cp out MainApp

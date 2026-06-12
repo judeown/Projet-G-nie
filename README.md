@@ -2,54 +2,65 @@
 
 ## Project Description
 
-This project is a Java and JavaFX application developed for the P.G.L. course. The goal is to simulate the evolution of cells on a configurable 2D grid.
+This project is a Java and JavaFX application developed for the P.G.L. course.
+The goal is to simulate the evolution of cells on a configurable 2D grid.
 
 Cells can evolve over time according to their state, age, energy, movement, neighborhood and probabilistic rules. The user can interact visually with the grid, add or remove cells, run the simulation, pause it, execute it step by step, observe live statistics, and save or restore a simulation.
 
+---
+
 ## Main Features
 
-- Graphical interface using JavaFX
-- Configurable 2D grid
-- Bounded or toroidal grid topology
-- Several cell states:
-  - Healthy
-  - Infected
-  - Recovered
-  - Dead
-- Individual cell creation and removal
-- Brush mode for adding cells around a selected position
-- Zone mode for adding cells in a rectangular area
-- Random cell generation
-- Simulation controls:
-  - Start
-  - Pause
-  - Resume
-  - Step-by-step execution
-  - Speed control
-- Cell evolution rules:
-  - Movement
-  - Infection propagation
-  - Recovery
-  - Death depending on time, energy and probabilities
-  - Cell division
-  - Interactions with neighboring cells
-- Live statistics:
-  - Number of cells by state
-  - Percentage of cells by state
-  - Average age
-  - Average energy
-  - Minimum and maximum energy
-- Simple graphical statistics display
-- Binary save and load system
-- Command-line version for testing the model without JavaFX
+* Graphical interface using JavaFX
+* Configurable 2D grid
+* Bounded or toroidal grid topology
+* Several cell states:
+
+  * Healthy
+  * Infected
+  * Recovered
+  * Dead
+* Individual cell creation and removal
+* Brush mode for adding cells around a selected position
+* Zone mode for adding cells in a rectangular area
+* Random cell generation
+* Simulation controls:
+
+  * Start
+  * Pause
+  * Resume
+  * Step-by-step execution
+  * Speed control
+* Cell evolution rules:
+
+  * Movement
+  * Infection propagation
+  * Recovery
+  * Death depending on time, energy and probabilities
+  * Cell division
+  * Interactions with neighboring cells
+* Live statistics:
+
+  * Number of cells by state
+  * Percentage of cells by state
+  * Average age
+  * Average energy
+  * Minimum and maximum energy
+* Simple graphical statistics display
+* Binary save and load system
+* Command-line version for testing the model without JavaFX
+
+---
 
 ## Technologies Used
 
-- Java
-- JavaFX
-- Object-Oriented Programming
-- Git / GitHub
-- Java serialization for binary import/export
+* Java
+* JavaFX
+* Object-Oriented Programming
+* Git / GitHub
+* Binary serialization for save/load
+
+---
 
 ## Project Structure
 
@@ -75,8 +86,13 @@ Projet-G-nie/
 │   ├── MainView.java
 │   └── StatsPanel.java
 │
+├── javafx-sdk-21.0.11/
+│   └── lib/
+│
 └── README.md
 ```
+
+---
 
 ## Main Classes
 
@@ -86,7 +102,7 @@ Represents a cell in the simulation. An agent has a position, an age, an energy 
 
 ### `Grid`
 
-Represents the 2D simulation grid. It stores the cells and manages positions, empty cells, neighbors and toroidal/bounded behavior.
+Represents the 2D simulation grid. It stores the cells and manages positions, empty cells, neighbors and toroidal or bounded behavior.
 
 ### `HealthState`
 
@@ -124,73 +140,87 @@ Connects user actions with the grid. It manages tools such as add, remove, brush
 
 These classes build the graphical interface, display the grid, provide simulation controls and show live statistics.
 
+---
+
 ## Requirements
 
-Before running the project, make sure the following tools are installed:
+Before running the project, make sure the following tools are available:
 
-- Java JDK 17 or higher
-- JavaFX SDK
-- Git, if the project is cloned from GitHub
+* Java JDK 17 or higher
+* Git, if the project is cloned from GitHub
+
+The JavaFX SDK is included in the project folder:
+
+```text
+javafx-sdk-21.0.11/
+```
 
 Check Java installation:
 
-```bash
+```powershell
 java --version
 javac --version
 ```
 
-## How to Compile the JavaFX Version
+---
 
-From the root folder of the project, run the following command.
+## How to Compile and Run the JavaFX Version
 
-On Windows with Git Bash, replace the JavaFX path with your own path:
+From the root folder of the project, run the following commands in PowerShell.
 
-```bash
-javac -encoding UTF-8 --module-path "C:/path/to/javafx-sdk/lib" --add-modules javafx.controls -d out Agent.java HealthState.java Position.java Grid.java SimulationEngine.java StatisticsManager.java SimulationSerializer.java MainApp.java view/*.java controller/*.java
+### 1. Create the output folder
+
+```powershell
+if (!(Test-Path out)) { mkdir out }
 ```
 
-Example:
+### 2. Compile the project
 
-```bash
-javac -encoding UTF-8 --module-path "C:/Users/Youssef/Desktop/Javaym/javafx-sdk-25.0.3/lib" --add-modules javafx.controls -d out Agent.java HealthState.java Position.java Grid.java SimulationEngine.java StatisticsManager.java SimulationSerializer.java MainApp.java view/*.java controller/*.java
+```powershell
+javac -encoding UTF-8 --module-path "javafx-sdk-21.0.11\lib" --add-modules javafx.controls -d out Agent.java HealthState.java Position.java Grid.java SimulationEngine.java StatisticsManager.java SimulationSerializer.java MainApp.java CommandLineApp.java controller\*.java view\*.java
 ```
 
-## How to Run the JavaFX Version
+If no error message appears, the compilation succeeded.
 
-After compilation, run:
+### 3. Run the JavaFX application
 
-```bash
-java --module-path "C:/path/to/javafx-sdk/lib" --add-modules javafx.controls -cp out MainApp
+```powershell
+java --module-path "javafx-sdk-21.0.11\lib" --add-modules javafx.controls -cp out MainApp
 ```
 
-Example:
+---
 
-```bash
-java --module-path "C:/Users/Youssef/Desktop/Javaym/javafx-sdk-25.0.3/lib" --add-modules javafx.controls -cp out MainApp
-```
+## How to Run the Command-Line Version
 
-## How to Compile and Run the Command-Line Version
+After compiling the project, run:
 
-The command-line version can be compiled without JavaFX:
-
-```bash
-javac -encoding UTF-8 -d out Agent.java HealthState.java Position.java Grid.java SimulationEngine.java StatisticsManager.java SimulationSerializer.java CommandLineApp.java
-```
-
-Then run:
-
-```bash
+```powershell
 java -cp out CommandLineApp
 ```
+
+The command-line version tests the model and displays statistics without opening the JavaFX interface.
+
+---
+
+## Clean Compiled Files
+
+The `out` folder contains generated `.class` files. It can be deleted safely because it is recreated during compilation.
+
+```powershell
+Remove-Item -Recurse -Force out -ErrorAction SilentlyContinue
+```
+
+---
 
 ## How to Use the Application
 
 1. Launch the JavaFX application.
 2. Choose the desired interaction mode:
-   - Add
-   - Remove
-   - Brush
-   - Zone
+
+   * Add
+   * Remove
+   * Brush
+   * Zone
 3. Select the cell state to place on the grid.
 4. Click on the grid to interact with cells.
 5. Use the simulation buttons to start, pause, resume or execute one step.
@@ -199,49 +229,54 @@ java -cp out CommandLineApp
 8. Save the simulation to a binary file when needed.
 9. Load a saved file to restore a previous simulation state.
 
+---
+
 ## Simulation Rules
 
 At each simulation step, cells may evolve according to several rules:
 
-- Healthy cells can become infected when they are close to infected cells.
-- Infected cells can recover according to a recovery probability.
-- Cells can die depending on age, energy or mortality probability.
-- Cells can move to nearby empty positions.
-- Some cells can divide and create new cells.
-- Neighboring cells can influence each other through proximity-based interactions.
+* Healthy cells can become infected when they are close to infected cells.
+* Infected cells can recover according to a recovery probability.
+* Cells can die depending on age, energy or mortality probability.
+* Cells can move to nearby empty positions.
+* Some cells can divide and create new cells.
+* Neighboring cells can influence each other through proximity-based interactions.
 
 The rules include probabilities in order to create dynamic and non-deterministic behavior.
+
+---
 
 ## Save and Load
 
 The application supports binary import/export.
 
-- Save: stores the current simulation state on disk.
-- Load: restores a saved simulation and allows the user to continue from the previous state.
+* Save: stores the current simulation state on disk.
+* Load: restores a saved simulation and allows the user to continue from the previous state.
 
-This feature is implemented using Java serialization.
+This feature is implemented with a binary format containing the grid dimensions, topology, simulation step count and agent data.
 
-## Command-Line Version
-
-The command-line version is included to test the model independently from the graphical interface. It creates a grid, runs simulation steps and displays statistics in the terminal.
-
-This version is useful for checking that the core logic works even without JavaFX.
+---
 
 ## Example Demonstration Scenario
 
 A possible demonstration scenario is:
 
-1. Start the application.
-2. Add several healthy cells.
-3. Add a few infected cells.
-4. Start the simulation.
-5. Observe the propagation of infection.
-6. Pause the simulation.
-7. Execute one step manually.
-8. Show the statistics panel.
-9. Save the simulation.
-10. Load the saved simulation.
-11. Continue the simulation from the restored state.
+1. Clone the GitHub repository.
+2. Compile the project from the command line.
+3. Launch the JavaFX application.
+4. Fill the grid randomly or add cells manually.
+5. Add several healthy cells.
+6. Add a few infected cells.
+7. Start the simulation.
+8. Observe the propagation of infection.
+9. Pause the simulation.
+10. Execute one step manually.
+11. Show the statistics panel.
+12. Save the simulation.
+13. Load the saved simulation.
+14. Continue the simulation from the restored state.
+
+---
 
 ## Authors
 
@@ -249,14 +284,22 @@ Project developed by an ING1-GI student group for the P.G.L. Cellules 2D project
 
 Team members:
 
-- Student 1: Model and grid management
-- Student 2: Simulation engine
-- Student 3: JavaFX interface
-- Student 4: Statistics and command-line version
-- Student 5: Save/load system and testing
+* Laurent Minkoulou: Cells / Agents
+* Rihem Sahli: Grid and simulation engine
+* Asaad Nasri: JavaFX interface
+* Jude Owona Assoumou: User interactions
+* Youssef Missaoui: Statistics, save/load system and command-line version
+
+---
 
 ## Notes
 
-The JavaFX SDK path depends on the machine. Before compiling, update the `--module-path` value with the correct local path to the JavaFX `lib` folder.
-
 The project must be compiled and launched from the command line for the final demonstration.
+
+The `out` folder is not part of the source code. It is generated during compilation and should not be committed to Git.
+
+The JavaFX SDK path used in this project is:
+
+```text
+javafx-sdk-21.0.11\lib
+```
