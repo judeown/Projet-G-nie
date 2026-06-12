@@ -30,8 +30,14 @@ public class GridView extends Canvas {
         this.grid = grid;
     }
 
+    public void refreshSize() {
+        setWidth(grid.getRows() * CELL_SIZE);
+        setHeight(grid.getColumns() * CELL_SIZE);
+    }
+
     
     public void render() {
+        refreshSize();
         GraphicsContext gc = getGraphicsContext2D();
         int cols = grid.getRows();    
         int rows = grid.getColumns(); 

@@ -46,7 +46,7 @@ public class MainView {
         this.grid                 = grid;
         this.engine               = engine;
         this.gridView             = new GridView(grid);
-        this.controlPanel         = new ControlPanel();
+        this.controlPanel         = new ControlPanel(grid.getWidth(), grid.getHeight());
         this.statsPanel           = new StatsPanel();
         this.interactionController = new InteractionController(grid);
 
@@ -134,6 +134,9 @@ public class MainView {
             gridView.render();
             statsPanel.update(grid);
         });
+
+        // Grid resize
+        controlPanel.getApplyGridSizeButton().setOnAction(e -> applyGridSize());
 
         // Connect epidemic parameter sliders to engine
         controlPanel.getContagionSlider().valueProperty().addListener((obs, o, n) ->
@@ -234,6 +237,21 @@ public class MainView {
         gridView.render();
         statsPanel.update(grid);
         controlPanel.updateStep(engine.getCurrentStep());
+    }
+
+    private void applyGridSize() {
+        try {
+            int width = Integer.parseInt(controlPanel.getGridWidthText().trim());
+            int height = Integer.parseInt(controlPanel.getGridHeightText().trim());
+            grid.resize(width, height);
+            controlPanel.setGridSizeFields(width, height);
+            gridView.refreshSize();
+            refreshDisplay();
+        } catch (NumberFormatException ex) {
+            showError("Invalid grid size", "Width and height must be positive integers.");
+        } catch (IllegalArgumentException ex) {
+            showError("Invalid grid size", ex.getMessage());
+        }
     }
 
     // -------------------------------------------------------------------------

@@ -10,8 +10,8 @@ public class Grid implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private final int     width;
-    private final int     height;
+    private       int     width;
+    private       int     height;
     private       boolean toroidal;
     private       Agent[][] cells;
 
@@ -104,6 +104,32 @@ public class Grid implements Serializable {
         for (int x = 0; x < width; x++)
             for (int y = 0; y < height; y++)
                 cells[x][y] = null;
+    }
+
+    /**
+     * Resizes the grid while preserving agents that still fit in bounds.
+     *
+     * @param newWidth  new number of columns
+     * @param newHeight new number of rows
+     */
+    public void resize(int newWidth, int newHeight) {
+        if (newWidth <= 0 || newHeight <= 0) {
+            throw new IllegalArgumentException("Grid size must use positive integers.");
+        }
+
+        Agent[][] newCells = new Agent[newWidth][newHeight];
+        int copyWidth = Math.min(width, newWidth);
+        int copyHeight = Math.min(height, newHeight);
+
+        for (int x = 0; x < copyWidth; x++) {
+            for (int y = 0; y < copyHeight; y++) {
+                newCells[x][y] = cells[x][y];
+            }
+        }
+
+        width = newWidth;
+        height = newHeight;
+        cells = newCells;
     }
 
     /**

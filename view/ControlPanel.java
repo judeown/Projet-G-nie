@@ -50,10 +50,15 @@ public class ControlPanel extends VBox {
     // Step counter label
     private final Label stepLabel;
 
+    // Grid size controls
+    private final TextField gridWidthField;
+    private final TextField gridHeightField;
+    private final Button    applyGridSizeButton;
+
     /**
      * Builds the full control panel with all UI controls.
      */
-    public ControlPanel() {
+    public ControlPanel(int initialGridWidth, int initialGridHeight) {
         super(10);
         setPadding(new Insets(14));
         setPrefWidth(230);
@@ -123,6 +128,12 @@ public class ControlPanel extends VBox {
         stepLabel.setTextFill(Color.web("#94a3b8"));
         stepLabel.setFont(Font.font("Monospace", 11));
 
+        // --- Grid size ---
+        gridWidthField = buildNumberField(initialGridWidth, "Width");
+        gridHeightField = buildNumberField(initialGridHeight, "Height");
+        applyGridSizeButton = styledButton("Apply size", "#c4b5fd", "#312e81");
+        applyGridSizeButton.setPrefWidth(200);
+
         // --- Layout assembly ---
         Label title = new Label("CELL SIMULATION");
         title.setFont(Font.font("Monospace", FontWeight.BOLD, 13));
@@ -139,8 +150,15 @@ public class ControlPanel extends VBox {
         HBox saveLoadRow = new HBox(6, saveButton, loadButton);
         saveLoadRow.setAlignment(Pos.CENTER_LEFT);
 
+        HBox gridSizeRow = new HBox(6, gridWidthField, gridHeightField);
+        gridSizeRow.setAlignment(Pos.CENTER_LEFT);
+
         getChildren().addAll(
             title, stepLabel,
+            sep(),
+            sectionLabel("Grid size (W / H)"),
+            gridSizeRow,
+            applyGridSizeButton,
             sep(),
             sectionLabel("▶ Simulation"),
             row1, row2, clearButton,
@@ -214,6 +232,9 @@ public class ControlPanel extends VBox {
     /** @return the Clear button */
     public Button getClearButton()           { return clearButton; }
 
+    /** @return the button that applies the grid size */
+    public Button getApplyGridSizeButton()   { return applyGridSizeButton; }
+
     /** @return the speed slider (steps per second) */
     public Slider getSpeedSlider()           { return speedSlider; }
 
@@ -259,6 +280,23 @@ public class ControlPanel extends VBox {
     /** @return the toroidal topology checkbox */
     public CheckBox getToroidalCheckBox()    { return toroidalCheckBox; }
 
+    /** @return the entered grid width */
+    public String getGridWidthText()         { return gridWidthField.getText(); }
+
+    /** @return the entered grid height */
+    public String getGridHeightText()        { return gridHeightField.getText(); }
+
+    /**
+     * Updates the displayed grid size values.
+     *
+     * @param width  grid width
+     * @param height grid height
+     */
+    public void setGridSizeFields(int width, int height) {
+        gridWidthField.setText(String.valueOf(width));
+        gridHeightField.setText(String.valueOf(height));
+    }
+
     // -------------------------------------------------------------------------
     // Private helpers
     // -------------------------------------------------------------------------
@@ -283,6 +321,18 @@ public class ControlPanel extends VBox {
         s.setPrefWidth(190);
         s.setStyle("-fx-control-inner-background: #2d2d4e;");
         return s;
+    }
+
+    private TextField buildNumberField(int value, String promptText) {
+        TextField field = new TextField(String.valueOf(value));
+        field.setPromptText(promptText);
+        field.setPrefWidth(97);
+        field.setStyle(
+            "-fx-background-color: #2d2d4e; -fx-text-fill: white; " +
+            "-fx-prompt-text-fill: #94a3b8; -fx-font-family: Monospace; -fx-font-size: 11; " +
+            "-fx-border-color: #4a5568; -fx-border-radius: 4; -fx-background-radius: 4;"
+        );
+        return field;
     }
 
     private Label sectionLabel(String text) {
