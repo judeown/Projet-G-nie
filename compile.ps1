@@ -1,1 +1,0 @@
-javac -encoding UTF-8 --module-path "javafx-sdk-21.0.11\lib" --add-modules javafx.controls -d out Agent.java HealthState.java Position.java Grid.java SimulationEngine.java StatisticsManager.java SimulationSerializer.java MainApp.java CommandLineApp.java controller\*.java view\*.java
